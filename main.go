@@ -12,12 +12,12 @@ import (
 func add(a int, b int) int {
 	return a + b
 }
-func creatNewVar()  {
+func creatNewVar() {
 	var a = 1
 	var b = 2
 	a, b = b, a
 	fmt.Println("a = ", a, " , b = ", b)
-	fmt.Println("a + b = ",add(a, b))
+	fmt.Println("a + b = ", add(a, b))
 
 	r := rand.New(rand.NewSource(time.Now().Unix()))
 	fmt.Println(r.Int())
@@ -47,12 +47,12 @@ func test(v int) {
 	}
 	arr := [...]int{1, 2, 3, 4, 5, 6, 7}
 
-	fmt.Printf("%T\n",arr)
-	fmt.Printf("%d%T\n",arr[0:3], arr[0:3])
+	fmt.Printf("%T\n", arr)
+	fmt.Printf("%d%T\n", arr[0:3], arr[0:3])
 	anotherArr := make([]int, 3)
 	fmt.Println(anotherArr)
 	fmt.Printf("len = %d, cap = %d\n", len(anotherArr), cap(anotherArr))
-	for i := 1; i <10; i++ {
+	for i := 1; i < 10; i++ {
 		anotherArr = append(anotherArr, i)
 	}
 	fmt.Println(anotherArr)
@@ -104,20 +104,20 @@ func testClosure(v int) {
 	p1, p2 := adder(), adder()
 	for i := 1; i < 10; i++ {
 		fmt.Println(p1(i),
-			p2(i * 2))
+			p2(i*2))
 	}
 	temp := fibonacci()
 	for i := 0; i < 20; i++ {
 		fmt.Printf("%d ", temp())
 	}
-	
+
 }
 
 // interface experiment
 
 type avActress struct {
 	name string
-	age int
+	age  int
 }
 
 type work interface {
@@ -139,9 +139,9 @@ type Good interface {
 }
 
 type Phone struct {
-	name string
+	name     string
 	quantity int
-	price int
+	price    int
 }
 
 func (phone Phone) settleAccount() int {
@@ -154,9 +154,9 @@ func (phone Phone) orderInfo() string {
 }
 
 type FreeGift struct {
-	name string
+	name     string
 	quantity int
-	price int
+	price    int
 }
 
 func (gift FreeGift) settleAccount() int {
@@ -183,16 +183,16 @@ func testInterface(v int) {
 	}
 	sensai := avActress{
 		name: "sensai",
-		age: 31,
+		age:  31,
 	}
 	i := work(sensai)
 	i.Fuck()
 	i.Cry()
 
 	iPhone := Phone{
-		name: "iPhone",
+		name:     "iPhone",
 		quantity: 1,
-		price: 10000,
+		price:    10000,
 	}
 	earPods := FreeGift{
 		name:     "airPods",
@@ -204,7 +204,7 @@ func testInterface(v int) {
 	fmt.Println(cost)
 
 	fmt.Println("try type-assertion")
-	item, ok :=goods[0].(Phone)
+	item, ok := goods[0].(Phone)
 	fmt.Println(item, ok)
 
 	fmt.Println("try type-switch")
@@ -233,12 +233,12 @@ func (o *object) testfun() (string, error) {
 	return o.name, nil
 }
 func (o *object) Error() string {
-	return fmt.Sprintf("oh no!!! %s",o.name)
+	return fmt.Sprintf("oh no!!! %s", o.name)
 }
 
 // interface experiment ends
 
-func testIO(v int)  {
+func testIO(v int) {
 	if v == 0 {
 		return
 	}
@@ -246,7 +246,7 @@ func testIO(v int)  {
 	b := make([]byte, 8)
 	for {
 		n, err := r.Read(b)
-		fmt.Printf("n = %v err = %v b = %v \n",n, err, b)
+		fmt.Printf("n = %v err = %v b = %v \n", n, err, b)
 		fmt.Printf("b[:n] = %q\n", b[:n])
 		if err == io.EOF {
 			break
@@ -262,5 +262,6 @@ func main() {
 	testInterface(0)
 	testIO(0)
 	tryRoutine(0)
-	tryChannel(1)
+	tryChannel(0)
+	tryMutex(1)
 }
