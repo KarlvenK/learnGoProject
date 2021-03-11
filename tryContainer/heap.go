@@ -59,4 +59,5 @@ func tryHeap() {
 		}
 	}
 	fmt.Println(*hPtr)
+	fmt.Println("=================")
 }
