@@ -3,40 +3,54 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 func tryMutex(v int) {
 	if v == 0 {
 		return
 	}
-	c := SafeCounter{v: make(map[string]int)}
-	for i := 0; i < 1000; i++ {
-		go c.Inc("somekey")
+
+	fmt.Printf("use waitGroup without mutex\n")
+
+	var wg sync.WaitGroup
+	count := 0
+
+	wg.Add(10)
+	for i := 0; i < 10; i++ {
+		go addd(&count, &wg)
 	}
 
-	time.Sleep(time.Second)
-	fmt.Println(c.Value("somekey"))
+	wg.Wait()
+	fmt.Printf("count equals to %d\n", count)
+	fmt.Printf("===========\n")
 
+	fmt.Printf("use mutex\n")
+
+	var lock *sync.Mutex
+
+	lock = new(sync.Mutex)
+	// lcok := &sync.Mutex{}
+	wg.Add(10)
+	count = 0
+	for i := 0; i < 10; i++ {
+		go adddd(&count, &wg, lock)
+	}
+	wg.Wait()
+	fmt.Printf("count equals to %d\n", count)
 }
 
-type SafeCounter struct {
-	v   map[string]int
-	mux sync.Mutex
+func addd(count *int, wg *sync.WaitGroup) {
+	for i := 0; i < 1000; i++ {
+		*count = *count + 1
+	}
+	wg.Done()
 }
 
-// Inc 增加给定 key 的计数器的值。
-func (c *SafeCounter) Inc(key string) {
-	c.mux.Lock()
-	// Lock 之后同一时刻只有一个 goroutine 能访问 c.v
-	c.v[key]++
-	c.mux.Unlock()
-}
-
-// Value 返回给定 key 的计数器的当前值。
-func (c *SafeCounter) Value(key string) int {
-	c.mux.Lock()
-	// Lock 之后同一时刻只有一个 goroutine 能访问 c.v
-	defer c.mux.Unlock()
-	return c.v[key]
+func adddd(count *int, wg *sync.WaitGroup, lock *sync.Mutex) {
+	for i := 0; i < 1000; i++ {
+		lock.Lock()
+		*count = *count + 1
+		lock.Unlock()
+	}
+	wg.Done()
 }
