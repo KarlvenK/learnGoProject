@@ -264,5 +264,6 @@ func main() {
 	tryRoutine(0)
 	tryChannel(0)
 	tryMutex(0)
-	tryReflect(1)
+	tryReflect(0)
+	tryWait(0)
 }
