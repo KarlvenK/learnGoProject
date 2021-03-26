@@ -263,7 +263,8 @@ func main() {
 	testIO(0)
 	tryRoutine(0)
 	tryChannel(0)
-	tryMutex(1)
+	tryMutex(0)
 	tryReflect(0)
 	tryWait(0)
+	tryRWMutex(1)
 }
