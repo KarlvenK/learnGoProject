@@ -49,7 +49,7 @@ func tryAnother() {
 	r := rand.New(rand.NewSource(time.Now().Unix()))
 
 	read = func(n int) {
-		rw.RLock()
+		rw.RLock() //读锁可以多次上锁
 		fmt.Printf("read goroutine %d is reading...\n", n)
 
 		v := count
