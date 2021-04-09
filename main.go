@@ -267,5 +267,6 @@ func main() {
 	tryReflect(0)
 	tryWait(0)
 	tryRWMutex(0)
-	tryPool(1)
+	tryPool(0)
+	tryIO(1)
 }
