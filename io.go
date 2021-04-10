@@ -17,7 +17,7 @@ func tryIO(tttt int) {
 			Read(p []byte) (n int, err error)
 		}
 	*/
-	data, _ := ReadFrom(os.Stdin, 11)
+	data, _ := ReadFrom(os.Stdin, 3)
 	fmt.Println(data)
 	data, _ = ReadFrom(strings.NewReader("from string"), 12)
 	fmt.Println(data)
@@ -28,7 +28,7 @@ func tryIO(tttt int) {
 			Write(p []byte) (n int, err error)
 		}
 	*/
-
+	_, _ = Println(1, 2, 3, 4, 5)
 }
 
 func ReadFrom(reader io.Reader, num int) ([]byte, error) {
@@ -38,4 +38,8 @@ func ReadFrom(reader io.Reader, num int) ([]byte, error) {
 		return p[:n], nil
 	}
 	return p, err
+}
+
+func Println(a ...interface{}) (n int, err error) {
+	return fmt.Fprintln(os.Stdout, a...)
 }
