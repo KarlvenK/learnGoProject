@@ -29,6 +29,28 @@ func tryIO(tttt int) {
 		}
 	*/
 	_, _ = Println(1, 2, 3, 4, 5)
+
+	tryOSfile()
+
+}
+
+func tryOSfile() {
+	file, err := os.Create("writeAt.txt")
+	if err != nil {
+		panic(err)
+	}
+
+	defer func(file *os.File) {
+		_ = file.Close()
+	}(file)
+
+	file.WriteString("this is my demo")
+
+	n, err := file.WriteAt([]byte("golang is cool"), 10)
+	if err != nil {
+		panic(err)
+	}
+	_, _ = Println(n)
 }
 
 func ReadFrom(reader io.Reader, num int) ([]byte, error) {
