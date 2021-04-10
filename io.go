@@ -11,6 +11,14 @@ func tryIO(tttt int) {
 	if tttt == 0 {
 		return
 	}
+
+	tryReadAndWrite()
+
+	tryOSfile()
+
+}
+
+func tryReadAndWrite() {
 	// io.Reader
 	/*
 		type Reader interface {
@@ -29,9 +37,6 @@ func tryIO(tttt int) {
 		}
 	*/
 	_, _ = Println(1, 2, 3, 4, 5)
-
-	tryOSfile()
-
 }
 
 func tryOSfile() {
