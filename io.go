@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -18,6 +19,36 @@ func tryIO(tttt int) {
 	tryOSfile()
 
 	tryFromAndTo()
+
+	trySeeker()
+
+	tryCloser()
+
+	//tryPipe()
+}
+
+/*
+func tryPipe() {
+	pipeReader, pipeWriter := io.Pipe()
+	go pipeWriter(pipeWriter)
+	go pipeReader(pipeReader)
+	time.Sleep(1e7)
+}
+*/
+
+func tryCloser() {
+	file, err := os.Open("receivor.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+}
+
+func trySeeker() {
+	reader := strings.NewReader("goLangTest")
+	reader.Seek(-1, os.SEEK_END)
+	r, _, _ := reader.ReadRune()
+	fmt.Printf("%c\n", r)
 }
 
 func tryFromAndTo() {
@@ -44,6 +75,8 @@ func tryFromAndTo() {
 	_, _ = writer.ReadFrom(file)
 	_ = writer.Flush()
 
+	reader := bytes.NewReader([]byte("this is a func\n"))
+	_, _ = reader.WriteTo(os.Stdout)
 }
 
 func tryReadAndWrite() {
@@ -77,7 +110,7 @@ func tryOSfile() {
 		_ = file.Close()
 	}(file)
 
-	file.WriteString("this is my demo")
+	_, _ = file.WriteString("this is my demo")
 
 	n, err := file.WriteAt([]byte("golang is cool"), 10)
 	if err != nil {
