@@ -3,10 +3,12 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"os"
 	"strings"
+	"time"
 )
 
 func tryIO(tttt int) {
@@ -24,17 +26,43 @@ func tryIO(tttt int) {
 
 	tryCloser()
 
-	//tryPipe()
+	tryPipe()
 }
 
-/*
 func tryPipe() {
 	pipeReader, pipeWriter := io.Pipe()
-	go pipeWriter(pipeWriter)
-	go pipeReader(pipeReader)
+	go PipeWrite(pipeWriter)
+	go PipeRead(pipeReader)
 	time.Sleep(1e7)
 }
-*/
+
+func PipeWrite(pipeWriter *io.PipeWriter) {
+	var (
+		i   = 0
+		err error
+		n   int
+	)
+	data := []byte("golang test")
+	for _, err = pipeWriter.Write(data); err == nil; n, err = pipeWriter.Write(data) {
+		i++
+		if i == 3 {
+			err = pipeWriter.CloseWithError(errors.New("输出三次停止"))
+		}
+	}
+	fmt.Println("close后输出的字节数： ", n, " error = ", err)
+}
+
+func PipeRead(pipeReader *io.PipeReader) {
+	var (
+		err error
+		n   int
+	)
+	data := make([]byte, 1024)
+	for n, err = pipeReader.Read(data); err == nil; n, err = pipeReader.Read(data) {
+		fmt.Printf("%s\n", data[:n])
+	}
+	fmt.Println("writer端 closewitherror后：", err)
+}
 
 func tryCloser() {
 	file, err := os.Open("receivor.txt")
