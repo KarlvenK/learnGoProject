@@ -14,5 +14,6 @@ func StrBuilder() {
 	builder.Reset()
 	builder.WriteString("this is a string")
 	builder.WriteString("\\did\\")
+	builder.WriteString("end")
 	fmt.Println(builder.String())
 }
