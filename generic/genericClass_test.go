@@ -31,4 +31,13 @@ func TestSort(t *testing.T) {
 	fmt.Println(nums)
 	fmt.Println(Pick(nums))
 	doFoo()
+	/*
+	switch interface{}(1).(type) {
+	case int:
+		fmt.Println("int")
+	default:
+		fmt.Println("err")
+	}
+	*/
+	fmt.Println(Equal(1, 2))	
 }

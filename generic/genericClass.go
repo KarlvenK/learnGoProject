@@ -83,3 +83,26 @@ func doFoo() {
 	x()
 }
 
+
+type A struct{}
+func (a A)Foo() {}
+type B struct{}
+func (b B)Foo() {}
+
+//Want[A]() //returns *A
+//Wang[B]() //returns *B
+func Wang[T interface{Foo()}]() (x *T) {
+	switch any(x).(type) {
+	case A:
+		return any(&A{}).(*T)
+	case B:
+		return any(&B{}).(*T)
+	default:
+		panic("unsupported")
+	}
+}
+
+func Equal[T comparable](v1, v2 T) bool {
+	//type x struct{} //error
+	return v1 == v2
+}
